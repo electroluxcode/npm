@@ -1,31 +1,36 @@
 name: Release
-"on":
+
+# 当 master 分支被 push,就会触发
+on:
   push:
-    branches:
-      - master
-      - next
-      - beta
-      - "*.x"
+    branches: [master]
 permissions:
-  contents: read
+  contents: write
+  issues: write
+  pull-requests: write
+  packages: write
+  id-token: write
+
 jobs:
   release:
-    name: release
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      id-token: write
-      issues: write
-      pull-requests: write
+
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      - name: setup node
+        uses: actions/setup-node@v2.5.2
         with:
-          cache: npm
-          node-version: lts/*
-      - run: npm clean-install
-      - run: corepack npm audit signatures
-      - run: npx semantic-release
+          node-version: "20.8.1" # node 版本
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm -v
+          node -v
+          npm cache clean --force
+          npx semantic-release
