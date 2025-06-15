@@ -33,4 +33,5 @@ jobs:
           npm -v
           node -v
           npm cache clean --force
+          npm install -f
           npx semantic-release
