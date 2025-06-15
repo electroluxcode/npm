@@ -1,8 +1,7 @@
 {
-  "name": "@semantic-release/npm",
+  "name": "semantic-release-monorepo-npm-plugin",
   "description": "semantic-release plugin to publish a npm package",
-  "version": "0.0.0-development",
-  "author": "Pierre Vanduynslager (https://twitter.com/@pvdlg_)",
+  "version": "0.0.5",
   "ava": {
     "files": [
       "test/**/*.test.js",
@@ -12,11 +11,12 @@
     "workerThreads": false
   },
   "bugs": {
-    "url": "https://github.com/semantic-release/npm/issues"
+    "url": "https://github.com/electroluxcode/npm/issues"
   },
   "contributors": [
     "Stephan Bönnemann <stephan@boennemann.me> (http://boennemann.me)",
-    "Gregor Martynus (https://twitter.com/gr2m)"
+    "Gregor Martynus (https://twitter.com/gr2m)",
+    "electroluxCode <code@electrolux.com>"
   ],
   "dependencies": {
     "@semantic-release/error": "^4.0.0",
@@ -56,7 +56,7 @@
     "lib",
     "index.js"
   ],
-  "homepage": "https://github.com/semantic-release/npm#readme",
+  "homepage": "https://github.com/electroluxcode/npm",
   "keywords": [
     "npm",
     "publish",
@@ -96,11 +96,11 @@
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/semantic-release/npm.git"
+    "url": "https://github.com/electroluxcode/npm.git"
   },
   "scripts": {
     "lint": "prettier --check \"{lib,test}/**/*.{js,json,ts}\" \"*.{md,json,js}\" \".github/**/*.yml\"",
