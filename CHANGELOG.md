@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/electroluxcode/npm/compare/v1.0.0...v1.1.0) (2025-06-16)
+
+
+### Features
+
+* add isReplaceWorkspace ([8789510](https://github.com/electroluxcode/npm/commit/8789510ab4a530e4ea721cb9031fa2c363110d5a))
+
 # 1.0.0 (2025-06-15)
 
 
