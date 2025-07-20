@@ -44,32 +44,6 @@ export async function verifyConditions(pluginConfig, context) {
   verified = true;
 }
 
-export async function analyzeCommits(pluginConfig, context) {
-  const { isUsePackageVersion = false } = pluginConfig;
-  const { nextRelease, logger } = context;
-  logger.log("isUsePackageVersion: %s, nextRelease: %s", isUsePackageVersion, nextRelease);
-
-  // 如果启用了基于 package.json 的版本计算，并且有 nextRelease
-  if (isUsePackageVersion && nextRelease && nextRelease.type) {
-    try {
-      const calculatedVersion = await calculateNextVersion(pluginConfig, context, nextRelease.type);
-      
-      if (calculatedVersion !== nextRelease.version) {
-        logger.log(`Overriding semantic-release version ${nextRelease.version} with package.json-based version ${calculatedVersion}`);
-        
-        // 修改 nextRelease 对象
-        nextRelease.version = calculatedVersion;
-        nextRelease.gitTag = `v${calculatedVersion}`;
-        
-        logger.log(`Updated nextRelease: version=${nextRelease.version}, gitTag=${nextRelease.gitTag}`);
-      }
-    } catch (error) {
-      logger.warn(`Failed to calculate version from package.json: ${error.message}`);
-      logger.warn(`Keeping semantic-release calculated version: ${nextRelease.version}`);
-    }
-  }
-}
-
 export async function prepare(pluginConfig, context) {
   const errors = verified ? [] : verifyNpmConfig(pluginConfig);
 
@@ -85,6 +59,38 @@ export async function prepare(pluginConfig, context) {
 
   if (errors.length > 0) {
     throw new AggregateError(errors);
+  }
+
+  // 在 prepare 阶段检查是否需要覆盖版本
+  const { isUsePackageVersion = false } = pluginConfig;
+  const { nextRelease, logger } = context;
+  
+  logger.log("Prepare stage - isUsePackageVersion: %s, nextRelease: %s", isUsePackageVersion, nextRelease ? JSON.stringify(nextRelease) : 'undefined');
+  
+  if (isUsePackageVersion && nextRelease && nextRelease.type) {
+    try {
+      const calculatedVersion = await calculateNextVersion(pluginConfig, context, nextRelease.type);
+      
+      logger.log("Calculated version from package.json: %s, current nextRelease.version: %s", calculatedVersion, nextRelease.version);
+      
+      if (calculatedVersion !== nextRelease.version) {
+        logger.log(`Overriding semantic-release version ${nextRelease.version} with package.json-based version ${calculatedVersion}`);
+        
+        // 修改 nextRelease 对象
+        nextRelease.version = calculatedVersion;
+        nextRelease.gitTag = `v${calculatedVersion}`;
+        
+        logger.log(`Updated nextRelease: version=${nextRelease.version}, gitTag=${nextRelease.gitTag}`);
+      } else {
+        logger.log("Version calculation result matches current version, no override needed");
+      }
+    } catch (error) {
+      logger.warn(`Failed to calculate version from package.json: ${error.message}`);
+      logger.warn(`Keeping semantic-release calculated version: ${nextRelease.version}`);
+    }
+  } else {
+    logger.log("Version override conditions not met: isUsePackageVersion=%s, hasNextRelease=%s, hasType=%s", 
+      isUsePackageVersion, !!nextRelease, nextRelease ? !!nextRelease.type : false);
   }
 
   await prepareNpm(npmrc, pluginConfig, context);
