@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/electroluxcode/npm/compare/v1.2.0...v1.2.1) (2025-07-20)
+
+
+### Bug Fixes
+
+* invaild isUsePackageVersion ([406e30e](https://github.com/electroluxcode/npm/commit/406e30efa965f2f2cec09e461bcc5cff1df96c52))
+
 # [1.2.0](https://github.com/electroluxcode/npm/compare/v1.1.1...v1.2.0) (2025-07-20)
 
 
