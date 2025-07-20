@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/electroluxcode/npm/compare/v1.1.1...v1.2.0) (2025-07-20)
+
+
+### Features
+
+* add isUsePackageVersion ([b40a05b](https://github.com/electroluxcode/npm/commit/b40a05b2b37ce1f5721046f60a6e868c75f838a4))
+
 ## [1.1.1](https://github.com/electroluxcode/npm/compare/v1.1.0...v1.1.1) (2025-07-20)
 
 
