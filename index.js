@@ -7,6 +7,7 @@ import verifyNpmAuth from "./lib/verify-auth.js";
 import addChannelNpm from "./lib/add-channel.js";
 import prepareNpm from "./lib/prepare.js";
 import publishNpm from "./lib/publish.js";
+import calculateNextVersion from "./lib/calculate-next-version.js";
 
 let verified;
 let prepared;
@@ -41,6 +42,31 @@ export async function verifyConditions(pluginConfig, context) {
   }
 
   verified = true;
+}
+
+export async function analyzeCommits(pluginConfig, context) {
+  const { isUsePackageVersion = false } = pluginConfig;
+  const { nextRelease, logger } = context;
+
+  // 如果启用了基于 package.json 的版本计算，并且有 nextRelease
+  if (isUsePackageVersion && nextRelease && nextRelease.type) {
+    try {
+      const calculatedVersion = await calculateNextVersion(pluginConfig, context, nextRelease.type);
+      
+      if (calculatedVersion !== nextRelease.version) {
+        logger.log(`Overriding semantic-release version ${nextRelease.version} with package.json-based version ${calculatedVersion}`);
+        
+        // 修改 nextRelease 对象
+        nextRelease.version = calculatedVersion;
+        nextRelease.gitTag = `v${calculatedVersion}`;
+        
+        logger.log(`Updated nextRelease: version=${nextRelease.version}, gitTag=${nextRelease.gitTag}`);
+      }
+    } catch (error) {
+      logger.warn(`Failed to calculate version from package.json: ${error.message}`);
+      logger.warn(`Keeping semantic-release calculated version: ${nextRelease.version}`);
+    }
+  }
 }
 
 export async function prepare(pluginConfig, context) {
