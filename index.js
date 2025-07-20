@@ -41,6 +41,46 @@ export async function verifyConditions(pluginConfig, context) {
     throw new AggregateError(errors);
   }
 
+  // 在 verifyConditions 阶段检查是否需要基于 package.json 版本进行版本计算
+  const { isUsePackageVersion = false } = pluginConfig;
+  const { logger } = context;
+  
+  logger.log("VerifyConditions stage - isUsePackageVersion: %s", isUsePackageVersion);
+  
+  if (isUsePackageVersion) {
+    try {
+      // 从 package.json 读取版本
+      const { readFile } = await import('fs/promises');
+      const path = await import('path');
+      
+      const { pkgRoot } = pluginConfig;
+      const basePath = pkgRoot ? path.resolve(context.cwd, pkgRoot) : context.cwd;
+      const packageJsonPath = path.join(basePath, 'package.json');
+      
+      const packageJsonContent = await readFile(packageJsonPath, 'utf8');
+      const packageJson = JSON.parse(packageJsonContent);
+      
+      if (packageJson && packageJson.version) {
+        logger.log(`VerifyConditions - Setting lastRelease.version to package.json version: ${packageJson.version}`);
+        
+        // 设置 context.lastRelease，这样 getNextVersion 会基于这个版本进行计算
+        context.lastRelease = {
+          version: packageJson.version,
+          gitTag: `v${packageJson.version}`,
+          gitHead: context.lastRelease?.gitHead || null,
+          name: `v${packageJson.version}`,
+          channels: [null]
+        };
+        
+        logger.log(`VerifyConditions - Created lastRelease: version=${context.lastRelease.version}, gitTag=${context.lastRelease.gitTag}`);
+      } else {
+        logger.warn("VerifyConditions - No version found in package.json");
+      }
+    } catch (error) {
+      logger.warn(`VerifyConditions - Failed to read package.json version: ${error.message}`);
+    }
+  }
+
   verified = true;
 }
 
