@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/electroluxcode/npm/compare/v1.2.4...v1.2.5) (2025-07-20)
+
+
+### Bug Fixes
+
+* chore package in prepare ([49f529b](https://github.com/electroluxcode/npm/commit/49f529bdd565dcb29c7019e3cc3ab9f3b307446e))
+
 ## [1.2.4](https://github.com/electroluxcode/npm/compare/v1.2.3...v1.2.4) (2025-07-20)
 
 
