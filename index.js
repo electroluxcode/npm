@@ -47,6 +47,7 @@ export async function verifyConditions(pluginConfig, context) {
 export async function analyzeCommits(pluginConfig, context) {
   const { isUsePackageVersion = false } = pluginConfig;
   const { nextRelease, logger } = context;
+  logger.log("isUsePackageVersion: %s, nextRelease: %s", isUsePackageVersion, nextRelease);
 
   // 如果启用了基于 package.json 的版本计算，并且有 nextRelease
   if (isUsePackageVersion && nextRelease && nextRelease.type) {
