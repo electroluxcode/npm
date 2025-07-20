@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/electroluxcode/npm/compare/v1.1.0...v1.1.1) (2025-07-20)
+
+
+### Bug Fixes
+
+* **deps:** update npm to ^10.9.3 ([#972](https://github.com/electroluxcode/npm/issues/972)) ([93e0937](https://github.com/electroluxcode/npm/commit/93e0937a5011451ef96b8faa85188508c18daf21))
+
 # [1.1.0](https://github.com/electroluxcode/npm/compare/v1.0.0...v1.1.0) (2025-06-16)
 
 
