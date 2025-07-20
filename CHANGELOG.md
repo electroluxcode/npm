@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/electroluxcode/npm/compare/v1.2.5...v1.2.6) (2025-07-20)
+
+
+### Bug Fixes
+
+* delelte verifycond ([7152ae3](https://github.com/electroluxcode/npm/commit/7152ae3ceed9e428fc960db59167f763f8cf15ba))
+
 ## [1.2.5](https://github.com/electroluxcode/npm/compare/v1.2.4...v1.2.5) (2025-07-20)
 
 
