@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/electroluxcode/npm/compare/v1.3.0...v1.4.0) (2025-08-01)
+
+
+### Features
+
+* version update ([5efa40a](https://github.com/electroluxcode/npm/commit/5efa40adefb34ef09f2aafaee5680ade78d0855b))
+
 ## [1.1.1](https://github.com/electroluxcode/npm/compare/v1.1.0...v1.1.1) (2025-08-01)
 
 
