@@ -1,3 +1,10 @@
+## [1.2.7](https://github.com/electroluxcode/npm/compare/v1.2.6...v1.2.7) (2025-08-01)
+
+
+### Bug Fixes
+
+* version ([b38faa0](https://github.com/electroluxcode/npm/commit/b38faa0db13d839c37f616c496587a1228f83841))
+
 ## [1.2.6](https://github.com/electroluxcode/npm/compare/v1.2.5...v1.2.6) (2025-07-20)
 
 
